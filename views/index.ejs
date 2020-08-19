@@ -1,0 +1,70 @@
+<!-- Ryley Higgins
+     Dockwa
+     Outdoor.sy
+-->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Outdoor.sy</title>
+  </head>
+  <body>
+    <h1>Outdoor.sy Customer List</h1>
+    <table id = "customers_table">
+      <th>Name</th>
+      <th>Email</th>
+      <th>Vehicle</th>
+      <th>Vehicle Name</th>
+      <th>Vehicle Length</th>
+      <%for(var customer in customers) {%>
+          <tr>
+            <td><%=customers[customer].name%></td>
+            <td><%=customers[customer].email%></td>
+            <td><%=customers[customer].vehicle%></td>
+            <td><%=customers[customer].vehicle_name%></td>
+            <td><%=customers[customer].vehicle_length%></td>
+          </tr>
+      <%}%>
+    </table>
+    </br>
+    <button onclick="sortTable(2)">Sort by Vehicle Type</button>
+    <button onclick="sortTable(0)">Sort by Customer Name</button>
+    <script>
+
+      //Function to sort table based on selected column
+      function sortTable(col_value) {
+        var table = document.getElementById("customers_table");
+        
+        var switching = true;
+  
+        //Loop until switching is done
+        while (switching) {
+
+          //start by saying: no switching is done:
+          switching = false;
+          var rows = table.rows;
+          
+          //Loop through rows
+          for (var i = 1; i < (rows.length - 1); i++) {
+            //Mark current and next row 
+            var row1 = rows[i].getElementsByTagName("TD")[col_value];
+            var row2 = rows[i + 1].getElementsByTagName("TD")[col_value];
+
+            //Set to lowercase and check against a-z scale 
+            if (row1.innerHTML.toLowerCase() > row2.innerHTML.toLowerCase()) {
+              
+              //Make the switch if true 
+              rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+              switching = true;
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      table, td, th {
+        border: solid black 1px;
+      };
+    </style>
+  </body>
+</html>
